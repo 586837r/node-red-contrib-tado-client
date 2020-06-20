@@ -50,6 +50,9 @@ module.exports = function(RED) {
             "windowDetectionTimeout",
             "openWindowMode",
             "configName",
+	    "language",
+	    "latitude",
+	    "longitude",
         ].forEach(k => node[k] = input[k]);
 
         node.tadoConfig = RED.nodes.getNode(node.configName);
@@ -171,6 +174,10 @@ module.exports = function(RED) {
                 case "getAirComfort":
                     call(arg("homeId"));
                     break;
+                case "getAirComfortV1":
+                    call(arg("homeId"), arg("language"), arg("latitude"), arg("longitude"));
+                    break;
+
                 default:
                     node.error(`invalid apiCall "${apiCall}"`);
                     break;

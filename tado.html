@@ -48,6 +48,7 @@
                 <option value="getInstallations" data-i18n="tado.option.get-installations"></option>
                 <option value="getWeather" data-i18n="tado.option.get-weather"></option>
                 <option value="getAirComfort" data-i18n="tado.option.get-air-comfort"></option>
+		<option value="getAirComfortV1" data-i18n="tado.option.get-air-comfort-v1"></option>
             </optgroup>
             <optgroup data-i18n="[label]tado.optgroup.zone">
                 <option value="getZones" data-i18n="tado.option.get-zones"></option>
@@ -163,12 +164,26 @@
     <div id="tadoOpenWindowMode">
         <div class="form-row">
             <label for="node-input-openWindowMode"><i class="fa fa-windows"></i> <span data-i18n="tado.label.open-window-mode"></span></label>
-            <select id="node-input-openWindowMode> style="width:60%; margin-right:5px;">
+            <select id="node-input-openWindowMode"> style="width:60%; margin-right:5px;">
                 <option value="true" data-i18n="tado.option.activate"></option>
                 <option value="false" data-i18n="tado.option.cancel"></option>
             </select>
         </div>
     </div>
+
+    <div class="form-row" id="tadoLanguage">
+        <label for="node-input-language"><i class="fa fa-language"></i> <span data-i18n="tado.label.language"></span></label>
+        <input type="text" id="node-input-language" data-i18n="[placeholder]de">
+    </div>
+    <div class="form-row" id="tadoLatitude">
+        <label for="node-input-latitude"><i class="fa fa-globe"></i> <span data-i18n="tado.label.latitude"></span></label>
+        <input type="text" id="node-input-latitude" data-i18n="[placeholder]51.050407">
+    </div>
+    <div class="form-row" id="tadoLongitude">
+        <label for="node-input-longitude"><i class="fa fa-globe"></i> <span data-i18n="tado.label.longitude"></span></label>
+        <input type="text" id="node-input-longitude" data-i18n="[placeholder]13.737262">
+    </div>
+
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
         <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
@@ -268,6 +283,9 @@
             windowDetectionTimeout: { value: 900 },
             openWindowMode: { value: true },
             timetableId: { value: "" },
+	    language: { value: "en" },
+	    latitude: { value: "" },
+	    longitude: { value: "" },
         },
         inputs: 1,
         outputs: 1,
@@ -293,6 +311,9 @@
                 const windowDetection = $('#tadoWindowDetectionForm');
                 const windowMode = $('#tadoOpenWindowMode');
                 const timetable = $('#tadoTimetableId');
+		const language = $('#tadoLanguage');
+		const latitude  = $('#tadoLatitude');
+		const longitude  = $('#tadoLongitude');
 
                 [
                     home,
@@ -306,6 +327,9 @@
                     windowDetection,
                     windowMode,
                     timetable,
+		    language,
+		    latitude,
+		    longitude,
                 ].forEach(e => e.hide());
 
                 switch (apiCall) {
@@ -419,6 +443,12 @@
                         break;
                     case "getAirComfort":
                         home.show();
+                        break;
+                    case "getAirComfortV1":
+                        home.show();
+			language.show();
+			latitude.show();
+			longitude.show();
                         break;
                 }
             });
